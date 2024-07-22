@@ -35,7 +35,7 @@ public class Main {
                 originalIndexes.add(i);
             }
             else {
-                List<Integer> indexes = new ArrayList<>();
+                ArrayList<Integer> indexes = new ArrayList<>();
                 indexes.add(i);
                 numbersToOriginalIndexes.put(number, indexes);
             }
@@ -58,10 +58,10 @@ public class Main {
 
                 int neededThirdNumber = expectedSum - firstNumber.value() - secondNumber.value();
 
-                // If we know that the third number is smaller than the second number (given that the array is sorted)
-                // then we know for sure the third number doesn't exist in the range of numbers which are bigger than it,
-                // so we break out of the loop, as the second number is only going to get bigger and bigger with every
-                // subsequent iteration
+                // If we know that the needed third number is smaller than the second number (given that the array is sorted)
+                // then we know for sure the third number doesn't exist in the range of numbers which follow,
+                // so we break out of the loop, as numbers that follow the second number are only bigger
+                // than the needed third number
                 if(neededThirdNumber < secondNumber.value())
                     break;
 
@@ -70,6 +70,9 @@ public class Main {
                 if(thirdNumberFound) {
                     List<Integer> originalIndexes = numbersToOriginalIndexes.get(neededThirdNumber);
                     for(int originalIndex: originalIndexes) {
+                        if(originalIndex == firstNumber.index() || originalIndex == secondNumber.index()) {
+                            continue;
+                        }
                         List<Integer> uniqueTriplet = new ArrayList<>();
                         uniqueTriplet.add(firstNumber.index());
                         uniqueTriplet.add(secondNumber.index());
